@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import Form from './Form';
 import Result from './Result';
 import '../components/App';
-
-const APIKey = '6f0884425a8af17d336368ae24870812';
+import '../components/App.css'
 
 class App extends Component{
 
@@ -25,10 +24,10 @@ class App extends Component{
     })
   }
 
-  handleCitySubmit = (e) =>{
-    e.preventDefault()
-    console.log("dziala");
-    const API =  `https://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&APPID=6f0884425a8af17d336368ae24870812&units=metric`;
+  componentDidUpdate(prevProps, prevState){
+    if(this.state.value.length <= 2) return;
+    if(prevState !== this.state.value){
+    const API = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&APPID=6f0884425a8af17d336368ae24870812&units=metric`;
 
     fetch(API)
     .then(response => {
@@ -59,13 +58,12 @@ class App extends Component{
       }))
     })
   }
-  
+}
   render(){
     return (
       <div className='App'>
         <Form value={this.state.value} 
         change = {this.handleInputChange}
-        submit = {this.handleCitySubmit}
         />
         <Result 
         weather = {this.state}

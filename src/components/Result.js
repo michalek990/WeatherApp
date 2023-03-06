@@ -1,7 +1,8 @@
 import React from 'react'
+import '../components/Result.css'
 
 const Result = props => {
-    const {err, city, date, sunrise, sunset, preasure, wind, temp} = props.weather
+    const {err, city, date, sunrise, sunset, temp} = props.weather
     let content = null
 
     if(!err && city){
@@ -14,7 +15,6 @@ const Result = props => {
                 <h4>Aktualna temperatura: {temp}</h4>
                 <h4>Wschód slonca dzisiaj {sunriseTimeNow}</h4>
                 <h4>Zachód slonca dzisiaj {sunsetTimeNow} </h4>
-
             </div>
         )
     }
