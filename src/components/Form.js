@@ -2,8 +2,9 @@ import React from 'react'
 
 const Form = props => {
     return ( 
-        <form>
-            <input type = "text" value = {props.value} placeholder="wpisz miasto " onChange={props.change}/>
+        <form onSubmit ={props.submit}>
+            <input type = "text" value = {props.value} placeholder="wpisz nazwisko " onChange={props.change}/>
+            <button>Wyszukaj użytkownika</button>
         </form>
      )
 }

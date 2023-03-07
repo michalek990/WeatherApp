@@ -2,26 +2,29 @@ import React from 'react'
 import '../components/Result.css'
 
 const Result = props => {
-    const {err, city, date, sunrise, sunset, temp} = props.weather
+    const {err, name, surname, age, gender} = props.infoAboutUser
     let content = null
 
-    if(!err && city){
-        const sunriseTimeNow = new Date(sunrise * 1000).toLocaleTimeString();
-        const sunsetTimeNow = new Date(sunset * 1000).toLocaleTimeString();
+    if(!err && surname){
         content = (
             <div>
-                <h3>Wyniki wyszukiwania dla <em>{city}</em></h3>
-                <h4>Dane dla dnia i godziny: {date}</h4>
-                <h4>Aktualna temperatura: {temp}</h4>
-                <h4>Wschód slonca dzisiaj {sunriseTimeNow}</h4>
-                <h4>Zachód slonca dzisiaj {sunsetTimeNow} </h4>
+                <h3>Wyniki wyszukiwania dla nazwiska<em>{surname}</em></h3>
+                <h4>Imie: {name}</h4>
+                <h4>Wiek: {age}</h4>
+                if({gender === 1}){
+                    <h4>Plec: Mężczyzna</h4>
+                }
+                else if({gender} === 2){
+                    <h4>Plec: Kobieta</h4>
+                }
+                
             </div>
         )
     }
 
     return ( 
         <div className='result'>
-            {err ? `Nie mam w bazie ${city}`: content}
+            {err ? `Nie mam w bazie osoby o nazwisku ${surname}`: content}
         </div>
      );
 }

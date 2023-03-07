@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Form from './Form';
 import Result from './Result';
+import axios from 'axios';
 import '../components/App';
 import '../components/App.css'
 
@@ -8,13 +9,10 @@ class App extends Component{
 
   state = {
     value: "",
-    date: "",
-    city: "",
-    sunrise: "",
-    sunset: "",
-    temp: "",
-    preasure: "",
-    wind: "",
+    name: "",
+    surname: "",
+    age: 0,
+    gender: 0,
     err: false 
   }
 
@@ -24,49 +22,45 @@ class App extends Component{
     })
   }
 
-  componentDidUpdate(prevProps, prevState){
-    if(this.state.value.length <= 2) return;
-    if(prevState !== this.state.value){
-    const API = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&APPID=6f0884425a8af17d336368ae24870812&units=metric`;
+  handleSurnameSubmit = e =>{
+    e.preventDefault();
 
-    fetch(API)
+    axios.get(`https://localhost:7117/api/users/(${this.state.value})`)
     .then(response => {
       if(response.ok){
         return response
       }
-      throw Error("Failed")
     })
-    .then(response => response.json())
+    .then(response => response.data)
     .then(data => {
-      const time = new Date().toLocaleDateString()
       this.setState({
         err: false,
-        date: time,
-        city: this.state.value,
-        sunrise: data.sys.sunrise,
-        sunset: data.sys.sunset,
-        temp: data.main.temp,
-        preasure: data.main.pressure,
-        wind: data.wind.speed,
+        name: data.name,
+        surname: this.state.value,
+        age: data.age,
+        gender: data.gender
       })
     })
+    
     .catch(err => {
       console.log(err)
       this.setState(state => ({
         err: true,
-        city: this.state.value
+        surname: this.state.value
       }))
     })
   }
-}
+  
+
   render(){
     return (
       <div className='App'>
         <Form value={this.state.value} 
         change = {this.handleInputChange}
+        submit = {this.handleSurnameSubmit}
         />
         <Result 
-        weather = {this.state}
+        infoAboutUser = {this.state}
         />
       </div>
     );
